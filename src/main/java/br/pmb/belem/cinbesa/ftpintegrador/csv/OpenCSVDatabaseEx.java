@@ -13,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,10 +29,6 @@ public class OpenCSVDatabaseEx {
     public static void main(String[] args) {
         System.out.println("gravando CSV....");
         try {
-            String url = "jdbc:mysql://localhost:3306/testdb?useSsl=false";
-            String user = "testuser";
-            String password = "test623";
-
             String fileName = "c:/tmp/csv/pacientes.csv";                // "src/main/resources/cars.csv";
             Path myPath = Paths.get(fileName);
 
