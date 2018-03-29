@@ -7,15 +7,11 @@ package br.pmb.belem.cinbesa.ftpintegrador.csv;
 
 import br.pmb.belem.cinbesa.ftpintegrador.db.DbConfig;
 import com.opencsv.CSVWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -47,11 +43,6 @@ public class OpenCSVDatabaseEx {
                     , CSVWriter.NO_ESCAPE_CHARACTER
                     , CSVWriter.RFC4180_LINE_END   // "\n"  // CSVWriter.DEFAULT_LINE_END
             );
-            /*  CSVWriter.DEFAULT_SEPARATOR,
-             CSVWriter.NO_QUOTE_CHARACTER,
-             CSVWriter.NO_ESCAPE_CHARACTER,
-             CSVWriter.DEFAULT_LINE_END);
-             */
             int linhasGravadas = writer.writeAll(rs, true, true, false);
             System.out.println("LINHAS GRAVADAS=" + linhasGravadas);
             writer.flush();
