@@ -18,7 +18,9 @@ import com.microsoft.sqlserver.jdbc.*;
 /**
  * @author Claudio Martins
  */
-public class connectDS {
+public class Conexao {
+
+    public static String DB_H2_DRIVER = "org.h2.Driver";
 
     public static void main(String[] args) {
         // Declare the JDBC objects.  
