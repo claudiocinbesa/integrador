@@ -1,10 +1,10 @@
 package br.pmb.belem.cinbesa.ftpintegrador.packager;
 
+import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Logging;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.swing.JOptionPane;
@@ -44,7 +44,7 @@ public class CompactaArquivo {
                 FileInputStream in = new FileInputStream(filenames[i]);
 
                 // Add ZIP entry to output stream.
-                out.putNextEntry(new ZipEntry(apenasNomeArquivo(filenames[i])));
+                out.putNextEntry(new ZipEntry(ArquivoDiretorio.apenasNomeArquivo(filenames[i])));
 
                 // Transfer bytes from the file to the ZIP file
                 int len;
@@ -67,18 +67,7 @@ public class CompactaArquivo {
 
     }
 
-    public String apenasNomeArquivo(String nomeArquivoCompleto) {
-        String nomeArq;
-        int pos = nomeArquivoCompleto.lastIndexOf("/");
-        if (pos <= 0) {
-            pos = nomeArquivoCompleto.lastIndexOf("\\");
-        }
-
-        nomeArq = nomeArquivoCompleto.substring(pos + 1);
-        //     System.out.println("apenas o nome=" + nomeArq);
-        return nomeArq;
-
-    }
+    
 
     public static void main(String[] args) {
         new CompactaArquivo();

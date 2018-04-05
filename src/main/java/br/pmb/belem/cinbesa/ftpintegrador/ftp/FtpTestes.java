@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.ftp;
 
 import java.io.FileInputStream;
 import java.io.IOException;

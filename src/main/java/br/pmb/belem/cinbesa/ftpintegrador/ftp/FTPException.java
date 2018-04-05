@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.ftp;
  
 class FTPException extends Exception {
 

@@ -128,7 +128,7 @@ public class RestauraBackup {
 
         // configura para recuperar o sistema de servicos
         nomeArquivoZip
-                = arquivoDirBackup.getDiretorio()
+                = arquivoDirBackup.getDiretorio("")
                 + "/"
                 + ArquivoDiretorio.PREFIXO_SERVICO + montaSufixoZip(arquivoDirBackup, diaHoraArquivoZip)
                 + ".zip";
@@ -177,22 +177,24 @@ public class RestauraBackup {
     }
 
     private static ArquivoDiretorio encontrouBackup() {
-        ArquivoDiretorio dirArquivo = null;
-        boolean ok = false;
-        try {
-            dirArquivo = ArquivoDiretorio.getArquivosBackup();
-            //   System.out.println("retorno do arquivo bk=" + dirArquivo.toString() + "\n Tam lista="
-            //     + dirArquivo.getListArq().size());
-            if (dirArquivo != null) {
-                ok = true;
-                return dirArquivo;
-            }
-
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro na escolha do arquivo de backup.\n" + ex.getMessage());
-            Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return dirArquivo;
+       try {
+           ArquivoDiretorio dirArquivo = null;
+           boolean ok = false;
+           
+           dirArquivo = ArquivoDiretorio.getArquivos("");
+           //   System.out.println("retorno do arquivo bk=" + dirArquivo.toString() + "\n Tam lista="
+           //     + dirArquivo.getListArq().size());
+           if (dirArquivo != null) {
+               ok = true;
+               return dirArquivo;
+           }
+           
+           
+           return dirArquivo;
+       } catch (IOException ex) {
+           Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return null;
     }
 
     private void importaDados() {

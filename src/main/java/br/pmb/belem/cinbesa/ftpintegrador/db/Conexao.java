@@ -14,68 +14,113 @@ package br.pmb.belem.cinbesa.ftpintegrador.db;
 
 import java.sql.*;
 import com.microsoft.sqlserver.jdbc.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
 
 /**
  * @author Claudio Martins
  */
 public class Conexao {
 
-    public static String DB_H2_DRIVER = "org.h2.Driver";
+    // Declare the JDBC objects.  
+    Connection conn = null;
+    PreparedStatement cstmt = null;   // se for usar uma chamada de Call = CallableStatement
+    ResultSet rs = null;
+  
+    public Conexao() {
+        try {
+            // Establish the connection.
+            DataSource ds = DbConfig.getDataSource();
+            this.conn = ds.getConnection();
+        } catch (SQLServerException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    public static void main(String[] args) {
-        // Declare the JDBC objects.  
-        Connection con = null;
-        PreparedStatement cstmt = null;   // se for usar uma chamada de Call = CallableStatement
-        ResultSet rs = null;
+    public Connection getConnection() {
+        return this.conn;
+    }
+
+    public void fecha() {
+        if (this.rs != null) {
+
+            try {
+                this.rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        if (this.cstmt != null) {
+
+            try {
+                this.cstmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        if (this.conn != null) {
+
+            try {
+                this.conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+
+     ResultSet executaSqlPacientes(String dataRef) {
 
         try {
-            // Establish the connection.   
-            SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setUser( DbConfig._user);
-            ds.setPassword(DbConfig._pwd);
-            ds.setServerName(DbConfig._urlIP);
-            ds.setPortNumber(1433);
-            ds.setDatabaseName(DbConfig._dbName);
-            con = ds.getConnection();
-
-            // Execute a stored procedure that returns some data.  
+            // Execute a stored procedure that returns some data.
             // cstmt = con.prepareCall("{call dbo.uspGetEmployeeManagers(?)}");
             // cstmt.setInt(1, 50);
-            
-            cstmt = con.prepareStatement("SELECT TOP 1000 * FROM  [dbo].[Geral_Paciente]\n" +
-                        "WHERE [DataCriacao] > ?;");
-            cstmt.setString(1, "20180301");
+            cstmt = this.conn.prepareStatement("SELECT TOP 1000 * FROM  [dbo].[Geral_Paciente]\n"
+                    + "WHERE [DataCriacao] > ?;");
+            cstmt.setString(1, dataRef);
             rs = cstmt.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+    public ResultSet executaSql (String sql) {
 
-            // Iterate through the data in the result set and display it.  
+        try {
+            cstmt = this.conn.prepareStatement(sql);
+            rs = cstmt.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            Conexao oConn = new Conexao();
+            String sql = "";
+            ResultSet rs = oConn.executaSqlPacientes("20180301");
+
+            // Iterate through the data in the result set and display it.
             while (rs.next()) {
                 System.out.println("PACIENTE: " + rs.getString(1)
                         + ", " + rs.getString(2));
-                
             }
-        } // Handle any errors that may have occurred.  
-        catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                }
-            }
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (Exception e) {
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                }
-            }
-            System.exit(1);
+            oConn.fecha();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }

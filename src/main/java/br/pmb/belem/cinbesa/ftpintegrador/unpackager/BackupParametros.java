@@ -29,7 +29,7 @@ public class BackupParametros {
     private String url =   "jdbc:h2:c:/sistemas/sysserv/bd/sysservbd";
     private String usuario =    "sa";
     private String senha =    "";
-    private String classeJDBC =  Conexao.DB_H2_DRIVER ;  //  "org.h2.Driver";
+    private String classeJDBC =   "org.h2.Driver";  //Conexao.DB_H2_DRIVER ;  // 
     private String opcoesRestore = ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";  // valido para H2
     private String[] tabelasSistema = {"SERVICO ORDER BY CATEGORIA_SERVICO ",
         "SERVICO_IMAGEM ",
