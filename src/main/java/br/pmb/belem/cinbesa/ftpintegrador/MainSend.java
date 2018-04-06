@@ -1,13 +1,13 @@
 package br.pmb.belem.cinbesa.ftpintegrador;
 
-import br.pmb.belem.cinbesa.ftpintegrador.ftp.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.ftp.Ftp;
 
 /**
  * Aplicacao principal (orquestrando a chamada das rotinas)
  *
  * @author Claudio Martins
  */
-public class Main {
+public class MainSend {
 
     public static void main(String[] args) {
         String path = null;
@@ -22,11 +22,10 @@ public class Main {
         System.out.println("Caminho(PATH) do CSV = " + Propriedades.getPropriedade("csv.path"));
 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
-        
-        GeradorCSV.geraCSVs("'20180302'");
-        
-        
-        
+        String dataRef = "'20170101'";
+        GeradorCSV.geraCSVs(dataRef);
+        String fileOutput = Empacotador.enpacotar(dataRef);
+        Ftp.enviar(fileOutput);
         
     }
 }

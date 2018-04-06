@@ -28,15 +28,42 @@ public class GeradorCSV {
 
     // pega os tipos de SQL que depende da tabela
     public static void geraCSVs(String dataRef) {
-         // gera paciente
         Map<String, String> parametros = new HashMap<>();
+        String sql = "";
+        Conexao c = new Conexao();
+        ResultSet rs = null;
+
+        
+        // gera paciente
         parametros.put("{DTCRIACAO}", dataRef);
         parametros.put("{DTALTERACAO}", dataRef);
-        String sql = new GeradorCSV().lerSQL("Template-Geral_Paciente.sql", parametros);
-        System.out.println(sql);
-        Conexao c = new Conexao();
-        ResultSet rs = c.executaSql(sql);
+        sql = new GeradorCSV().lerSQL("Template-Geral_Paciente.sql", parametros);
+        // System.out.println(sql);
+        rs = c.executaSql(sql);
         OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "pacientes.csv");
+
+        // gera AvaliacaoIncial
+        parametros.put("{DTCRIACAO}", dataRef);
+        parametros.put("{DTEXCLUSAO}", dataRef);
+        parametros.put("{DTINIAVALIACAO}", dataRef);
+        parametros.put("{DTFIMAVALIACAO}", dataRef);
+        sql = new GeradorCSV().lerSQL("Template-PAS_AvaliacaoInicial.sql", parametros);
+        rs = c.executaSql(sql);
+        OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "avaliacaoinicial.csv");
+
+        // FilaAtendimento
+        parametros.put("{DTATENDIMENTO}", dataRef);
+        parametros.put("{DTCRIACAO}", dataRef);
+        parametros.put("{DTINIATENDIMENTO}", dataRef);
+        parametros.put("{DTFIMATENDIMENTO}", dataRef);
+        parametros.put("{DTEXCLUSAO}", dataRef);
+        sql = new GeradorCSV().lerSQL("Template-PAS_FilaAtendimento.sql", parametros);
+        rs = c.executaSql(sql);
+        OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "filaatendimento.csv");
+
+        // fecha a conexao ao banco.
+        c.fecha();
+
     }
 
     public String lerSQL(String fileSQL, Map<String, String> param) {

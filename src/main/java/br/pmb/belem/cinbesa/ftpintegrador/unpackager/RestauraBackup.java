@@ -181,7 +181,7 @@ public class RestauraBackup {
            ArquivoDiretorio dirArquivo = null;
            boolean ok = false;
            
-           dirArquivo = ArquivoDiretorio.getArquivos("");
+           dirArquivo = ArquivoDiretorio.getArquivos("", "");
            //   System.out.println("retorno do arquivo bk=" + dirArquivo.toString() + "\n Tam lista="
            //     + dirArquivo.getListArq().size());
            if (dirArquivo != null) {

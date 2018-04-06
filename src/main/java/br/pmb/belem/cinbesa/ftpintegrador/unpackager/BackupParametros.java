@@ -1,6 +1,5 @@
 package br.pmb.belem.cinbesa.ftpintegrador.unpackager;
 
-import br.pmb.belem.cinbesa.ftpintegrador.db.Conexao;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;

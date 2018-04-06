@@ -1,13 +1,12 @@
 package br.pmb.belem.cinbesa.ftpintegrador.packager;
 
-import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Logging;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Utils;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.swing.JOptionPane;
 
 public class CompactaArquivo {
 
@@ -39,12 +38,12 @@ public class CompactaArquivo {
                     outFilename));
             // Compress the files
             for (int i = 0; i < filenames.length; i++) {
-                //       System.out.println("zipando o arquivo " + filenames[i]);
+                System.out.println("zipando o arquivo " + filenames[i]);
 
                 FileInputStream in = new FileInputStream(filenames[i]);
 
                 // Add ZIP entry to output stream.
-                out.putNextEntry(new ZipEntry(ArquivoDiretorio.apenasNomeArquivo(filenames[i])));
+                out.putNextEntry(new ZipEntry(Utils.apenasNomeArquivo(filenames[i])));
 
                 // Transfer bytes from the file to the ZIP file
                 int len;
@@ -64,10 +63,8 @@ public class CompactaArquivo {
             logger.printMsgFalha("Erro de I/O ao compactar.. \n \t\t"
                     + e.getMessage());
         }
-
     }
-
-    
+  
 
     public static void main(String[] args) {
         new CompactaArquivo();

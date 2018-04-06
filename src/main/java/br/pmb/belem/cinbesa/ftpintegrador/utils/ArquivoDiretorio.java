@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -21,15 +20,25 @@ public class ArquivoDiretorio {
         listArq = new HashMap<String, String>();
     }
 
-    public static ArquivoDiretorio getArquivos(String pathFiles) throws IOException {
+    public String[] getArquivos() {
+        Set<String> keys = this.listArq.keySet();
+        String[] files = new String[keys.size()];
+        int i = 0;
+        for (String fileK : keys) {
+            files[i] = this.listArq.get(fileK);
+            i++;
+        }
+        return files;
+    }
+
+    public static ArquivoDiretorio getArquivos(String pathFiles, String filtroExt) throws IOException {
         ArquivoDiretorio arqsDir = new ArquivoDiretorio();
         arqsDir.diretorio = pathFiles;
         File[] conteudo = new java.io.File(pathFiles).listFiles();
         for (File file : conteudo) {
-           // if (file.getName().contains(PREFIXO_SERVICO)) {
-            //    System.out.println(" * " + file.getName());
-            arqsDir.addArquivo(file.getName());
-            // }
+            if (file.getName().toLowerCase().contains(filtroExt.toLowerCase())) {
+                arqsDir.listArq.put(file.getName(), file.getAbsolutePath());
+            }
         }
         return arqsDir;
     }
@@ -40,10 +49,6 @@ public class ArquivoDiretorio {
 
     public void setListArq(Map<String, String> listArq) {
         this.listArq = listArq;
-    }
-
-    private void addArquivo(String fileName) {
-        this.listArq.put(fileName, fileName);
     }
 
     private void addArquivoDATA(String fileName) {
@@ -62,20 +67,10 @@ public class ArquivoDiretorio {
         this.listArq.put(diaBackup, dataFormatada);
     }
 
-    public static String apenasNomeArquivo(String nomeArquivoCompleto) {
-        String nomeArq;
-        int pos = nomeArquivoCompleto.lastIndexOf("/");
-        if (pos <= 0) {
-            pos = nomeArquivoCompleto.lastIndexOf("\\");
-        }
-
-        nomeArq = nomeArquivoCompleto.substring(pos + 1);
-        //     System.out.println("apenas o nome=" + nomeArq);
-        return nomeArq;
-    }
+    
 
     public static void main(String[] args) throws Exception {
-        ArquivoDiretorio arqs = ArquivoDiretorio.getArquivos("c:/tmp/csv");
+        ArquivoDiretorio arqs = ArquivoDiretorio.getArquivos("c:/tmp/csv", ".csv");
         // 2011 11 10 _ 17- 01
         // 1234 56 78 9 012 34
 
@@ -85,7 +80,7 @@ public class ArquivoDiretorio {
         Set<String> lista = arqs.getListArq().keySet();
         for (String dataBk : lista) {
             dtFormatada = arqs.getListArq().get(dataBk);
-            System.out.println("DIA=" + dataBk + "     : " + dtFormatada);
+            System.out.println("FILES = " + dataBk + "     : " + dtFormatada);
         }
     }
 

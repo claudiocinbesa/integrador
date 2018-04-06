@@ -42,5 +42,15 @@ public class Utils {
         }
     }
     
-    
+    public static String apenasNomeArquivo(String nomeArquivoCompleto) {
+        String nomeArq;
+        int pos = nomeArquivoCompleto.lastIndexOf("/");
+        if (pos <= 0) {
+            pos = nomeArquivoCompleto.lastIndexOf("\\");
+        }
+
+        nomeArq = nomeArquivoCompleto.substring(pos + 1);
+        //     System.out.println("apenas o nome=" + nomeArq);
+        return nomeArq;
+    }
 }

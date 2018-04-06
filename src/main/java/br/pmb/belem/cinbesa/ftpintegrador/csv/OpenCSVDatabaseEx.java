@@ -6,7 +6,7 @@
 package br.pmb.belem.cinbesa.ftpintegrador.csv;
 
 import br.pmb.belem.cinbesa.ftpintegrador.db.DbConfig;
-import br.pmb.belem.cinbesa.ftpintegrador.ftp.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.Propriedades;
 import com.opencsv.CSVWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
