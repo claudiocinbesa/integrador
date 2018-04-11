@@ -18,16 +18,17 @@ import org.apache.commons.net.ftp.FTPClient;
  EM https://www.devmedia.com.br/desenvolvendo-um-cliente-ftp/3547
  */
 public class Ftp {
-
+    
     public static void main(String[] args) throws IOException {
         System.out.println("Transf....");
-        enviar("C:\\tmp\\csv\\rbe-UNIDADE'20180302'.zip");
+        enviar("C:\\tmp\\rbe\\rbe-999999'20170101'.zip");
     }
-
-    public static void enviar(String fileName){
+    
+    public static void enviar(String fileName) {
         try {
             FTPClient ftp = new FTPClient();
-            ftp.connect(Propriedades.getPropriedade("ftp.connect")); //ftp.meudominio.com.br
+            ftp.connect(Propriedades.getPropriedade("ftp.connect"),
+                    Integer.parseInt(Propriedades.getPropriedade("ftp.port"))); //ftp.meudominio.com.br
             ftp.login(Propriedades.getPropriedade("ftp.user"), Propriedades.getPropriedade("ftp.pwd"));
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
             

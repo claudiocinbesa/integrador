@@ -1,7 +1,5 @@
 package br.pmb.belem.cinbesa.ftpintegrador;
 
-import br.pmb.belem.cinbesa.ftpintegrador.ftp.Ftp;
-
 /**
  * Aplicacao principal (orquestrando a chamada das rotinas)
  *
@@ -25,7 +23,6 @@ public class MainSend {
         String dataRef = "'20170101'";
         GeradorCSV.geraCSVs(dataRef);
         String fileOutput = Empacotador.enpacotar(dataRef);
-        Ftp.enviar(fileOutput);
-        
+        EnviaFTP.enviar(fileOutput);
     }
 }

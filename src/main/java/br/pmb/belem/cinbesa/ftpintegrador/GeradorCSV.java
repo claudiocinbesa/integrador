@@ -51,15 +51,21 @@ public class GeradorCSV {
         rs = c.executaSql(sql);
         OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "avaliacaoinicial.csv");
 
-        // FilaAtendimento
+        // FilaAtendimento  PRESENTES (Sem Exclusao)
         parametros.put("{DTATENDIMENTO}", dataRef);
         parametros.put("{DTCRIACAO}", dataRef);
         parametros.put("{DTINIATENDIMENTO}", dataRef);
         parametros.put("{DTFIMATENDIMENTO}", dataRef);
-        parametros.put("{DTEXCLUSAO}", dataRef);
-        sql = new GeradorCSV().lerSQL("Template-PAS_FilaAtendimento.sql", parametros);
+        // parametros.put("{DTEXCLUSAO}", dataRef);
+        sql = new GeradorCSV().lerSQL("Template-PAS_FilaAtendimentosPRESENTES.sql", parametros);
         rs = c.executaSql(sql);
-        OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "filaatendimento.csv");
+        OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "filaatendimentosPRESENTES.csv");
+
+        // FilaAtendimento  EXCLUIDOS (COM Exclusao)
+        parametros.put("{DTEXCLUSAO}", dataRef);
+        sql = new GeradorCSV().lerSQL("Template-PAS_FilaAtendimentosEXCLUIDOS.sql", parametros);
+        rs = c.executaSql(sql);
+        OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "filaatendimentosEXCLUIDOS.csv");
 
         // fecha a conexao ao banco.
         c.fecha();
