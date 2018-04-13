@@ -3,7 +3,7 @@
  */
 package br.pmb.belem.cinbesa.ftpintegrador.db;
 
-import br.pmb.belem.cinbesa.ftpintegrador.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.PWSec;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;

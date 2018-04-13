@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.send;
 
 import br.pmb.belem.cinbesa.ftpintegrador.csv.OpenCSVDatabaseEx;
 import br.pmb.belem.cinbesa.ftpintegrador.db.Conexao;
@@ -7,17 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  * Esta classe recupera os SQLs e gera os arquivos CSV na pasta csv (destino)

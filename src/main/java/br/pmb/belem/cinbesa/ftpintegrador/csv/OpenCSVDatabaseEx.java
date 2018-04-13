@@ -6,7 +6,7 @@
 package br.pmb.belem.cinbesa.ftpintegrador.csv;
 
 import br.pmb.belem.cinbesa.ftpintegrador.db.DbConfig;
-import br.pmb.belem.cinbesa.ftpintegrador.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import com.opencsv.CSVWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,12 +32,13 @@ public class OpenCSVDatabaseEx {
             //  ResultSet rs = DbConfig.getResultSetSQL("SELECT TOP 100000  * FROM  dbo.Geral_Paciente;");
             // SELECT TOP 4000 * FROM  dbo.Geral_Paciente;
             CSVWriter writer = new CSVWriter(
-                    Files.newBufferedWriter(myPath, StandardCharsets.UTF_8), CSVWriter.DEFAULT_SEPARATOR // '|'
+                    Files.newBufferedWriter(myPath,  StandardCharsets.UTF_8),  // ,
+                    CSVWriter.DEFAULT_SEPARATOR // '|'
                     , '"' // CSVWriter.NO_QUOTE_CHARACTER
                     , CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.RFC4180_LINE_END // "\n"  // CSVWriter.DEFAULT_LINE_END
             );
             int linhasGravadas = writer.writeAll(rs, true, true, false);
-            System.out.println("LINHAS GRAVADAS=" + linhasGravadas);
+            System.out.println(nomeTabela + " -> LINHAS GRAVADAS=" + linhasGravadas);
             writer.flush();
             writer.close();
             rs.close();

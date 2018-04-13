@@ -1,4 +1,6 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.send;
+
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 
 /**
  * Aplicacao principal (orquestrando a chamada das rotinas)
@@ -14,11 +16,11 @@ public class MainSend {
         } else {
             path = args[0];
         }
-
+        //
         System.out.println("Inicializando os parametros em " + path);    // "C:/tmp/csv";
-        Propriedades.getInstance(path); // Deve inicializar no inicio do processo          
+        Propriedades.getInstance(path, "configSEND.properties"); // Deve inicializar no inicio do processo          
         System.out.println("Caminho(PATH) do CSV = " + Propriedades.getPropriedade("csv.path"));
-
+        // 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
         String dataRef = "'20170101'";
         GeradorCSV.geraCSVs(dataRef);

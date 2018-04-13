@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,14 +6,12 @@ import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Trata os dados de configuraÃ§Ã£o do aplicativo
+ * Trata os dados de configuracao do aplicativo
  *
  * @author Claudio Martins
  */
@@ -27,7 +25,7 @@ public class Propriedades {
     Properties prop = new Properties();
 
     public static String getPropriedade(String key) {
-        Propriedades obj = Propriedades.getInstance(null);
+        Propriedades obj = Propriedades.getInstance(null, null);
         return obj.prop.getProperty(key);
     }
 
@@ -37,15 +35,15 @@ public class Propriedades {
 
     }
 
-    public static Propriedades getInstance(String pathPropriedade) {
+    public static Propriedades getInstance(String pathPropriedade,  String filename) {
         if (instance == null) {
             instance = new Propriedades();
-            instance.loadProp(pathPropriedade);
+            instance.loadProp(pathPropriedade, filename);
         }
         return instance;
     }
 
-    private void loadProp(String pathPropriedade) {
+    private void loadProp(String pathPropriedade,  String filename) {
         boolean temFile = false;
         if (pathPropriedade != null) {
             File configFile = new File(pathPropriedade);
@@ -60,7 +58,7 @@ public class Propriedades {
 
             InputStream input = null;
 
-            String filename = "config.properties";
+           // = "config.properties";
             if (temFile) {
                 Path path = FileSystems.getDefault().getPath(pathPropriedade, filename);
                 input = Files.newInputStream(path);

@@ -1,6 +1,6 @@
 package br.pmb.belem.cinbesa.ftpintegrador.ftp;
 
-import br.pmb.belem.cinbesa.ftpintegrador.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Utils;
 import java.io.FileInputStream;
 import java.io.IOException;

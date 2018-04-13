@@ -1,5 +1,6 @@
-package br.pmb.belem.cinbesa.ftpintegrador;
+package br.pmb.belem.cinbesa.ftpintegrador.send;
 
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import br.pmb.belem.cinbesa.ftpintegrador.packager.CompactaArquivo;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
 import java.io.IOException;
