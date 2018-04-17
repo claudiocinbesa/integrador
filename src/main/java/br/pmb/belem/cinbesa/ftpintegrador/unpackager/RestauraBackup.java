@@ -1,6 +1,6 @@
 package br.pmb.belem.cinbesa.ftpintegrador.unpackager;
 
-import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import  br.pmb.belem.cinbesa.ftpintegrador.utils.Zipper;
 import  br.pmb.belem.cinbesa.ftpintegrador.utils.UtilData;
 import java.io.File;
@@ -31,9 +31,11 @@ import javax.swing.SwingWorker;
 public class RestauraBackup {
    BackupParametros parametrosBackup ;
     static String nomeArquivoZip = "";
-    static String nomeArquivoZipCaixa = null;
+   
     static ArquivoDiretorio arquivoDirBackup;
- public String DIRETORIO_TEMP = "C:/temp/copia2/";
+    
+    public String DIRETORIO_TEMP = "";
+    
     private String[] tabelasSistema2 = {"SERVICO ",
         "SERVICO_IMAGEM ", "SERVICO_STATUS ", "SISTEMA_PARAMETROS ",
         "SISTEMA_PERMISSAO ", "SISTEMA_TAREFAS ", "USUARIO ", "CLIENTE ",
@@ -45,8 +47,6 @@ public class RestauraBackup {
     
     int i = 0;
     // 
-    
-
    
     //  private String arquivoBackupPath;
     protected Connection conexao = null;
@@ -89,7 +89,7 @@ public class RestauraBackup {
         }
     }
 
-    public static void executaImportacao() {
+    public static void executaImportacao(String pathPropriedades, String filePropriedades) {
 
         String msg = "<html><body> "
                 + "<br> <b>Atenção</b>"
@@ -99,12 +99,15 @@ public class RestauraBackup {
                 + "<br><br> - Primeiro passo é escolher o arquivo (zip) que contém o backup."
                 + "<br>    - Em seguida, você pode confirmar a importação (restauração) dos dados contidos no backup."
                 + " </body></html> ";
-        JOptionPane.showMessageDialog(null, msg, "Restauração dos dados. Cuidados.", JOptionPane.INFORMATION_MESSAGE);
-
-        arquivoDirBackup = encontrouBackup();
+        System.out.println("Restauração dos dados. Cuidados." + msg);
+         
+        Propriedades.getInstance(pathPropriedades,filePropriedades); // Deve inicializar   "configSEND.properties"         
+        // System.out.println("Caminho(PATH) do CSV = " + Propriedades.getPropriedade("csv.path"));
+        
+        arquivoDirBackup = encontrouBackup(Propriedades.getPropriedade("csv.path"), "zip");
 
         if (arquivoDirBackup != null) {
-
+            // SwingWorker gera uma Thread para processamento longo...
             SwingWorker worker = new SwingWorker() {
                 @Override
                 protected Object doInBackground() throws Exception {
@@ -113,7 +116,7 @@ public class RestauraBackup {
                 }
 
                 protected void done() {
-                    System.exit(0);
+                    System.out.println("BACKUP Restaurado!!!! ");
                 }
             };
             worker.execute();
@@ -122,21 +125,35 @@ public class RestauraBackup {
     }
 
     private static void executaRestauracaoDados() {
-        // System.out.println(" dentro do if - tam da lista - " + arquivoDirBackup.getListArq().size());
-
-        String diaHoraArquivoZip = escolheArquivoZip(arquivoDirBackup);
-
-        // configura para recuperar o sistema de servicos
-        nomeArquivoZip
-                = arquivoDirBackup.getDiretorio("")
-                + "/"
-                + ArquivoDiretorio.PREFIXO_SERVICO + montaSufixoZip(arquivoDirBackup, diaHoraArquivoZip)
-                + ".zip";
-
-        //      System.out.println("arquivo zip do Servico=" + nomeArquivoZip);
-        BackupParametros paramSistemaServ = BackupParametros.getInstanciaSysServ();
+        // apaga pasta temporaria
         
+        
+        // extrai os arquivos CSV na pasta temporaria
+        extraiCSV();
+        
+        // carrega os dados no banco de dados.
+        
+    }
+  
+    private static void extraiCSV(){
+        String nomeArquivoZip = escolheArquivoZip(arquivoDirBackup);
+        System.out.println("ULT ArquivoZip =" + nomeArquivoZip);
+        
+    }
+     
+    private static void carregaDadosFromCSV(){
+        
+    }
+    
+    
+private static void xxxx(){
+        
+         
+
+        
+        BackupParametros paramSistemaServ = BackupParametros.getInstanciaSysServ();
         paramSistemaServ.setNomeArquivoZip(nomeArquivoZip);
+        
         RestauraBackup importadorServ = new RestauraBackup();
        // importadorServ.montaJanelaDialogo(paramSistemaServ, "Servicos", 80, 80);
         importadorServ.extraiArquivos();
@@ -150,46 +167,29 @@ public class RestauraBackup {
 
     
 
-    public static void main(String[] args) throws Exception {
-
-        RestauraBackup.executaImportacao();
-
-    }
-
-    private void testaCsv() throws Exception {
-        String diretorioTemp = "c:/temp/copia2/";
-        String arqCsv = diretorioTemp + "CLIENTE.csv";
-
-        //   System.out.println("abrindo o arquivo=" + arqCsv);
-        RestauraBackup.abreCsv(arqCsv);
-
-    }
 
     private void fechaConexao() {
         try {
             this.conexao.commit();
             this.conexao.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha no fechamento do banco de dados "
-                    + "\n MSG:" + ex.getMessage(), "FALHA", JOptionPane.INFORMATION_MESSAGE);
+            
             Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private static ArquivoDiretorio encontrouBackup() {
+    private static ArquivoDiretorio encontrouBackup(String path, String filtro) {
        try {
            ArquivoDiretorio dirArquivo = null;
            boolean ok = false;
            
-           dirArquivo = ArquivoDiretorio.getArquivos("", "");
+           dirArquivo = ArquivoDiretorio.getArquivos(path, filtro);
            //   System.out.println("retorno do arquivo bk=" + dirArquivo.toString() + "\n Tam lista="
            //     + dirArquivo.getListArq().size());
            if (dirArquivo != null) {
                ok = true;
                return dirArquivo;
            }
-           
-           
            return dirArquivo;
        } catch (IOException ex) {
            Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,12 +208,10 @@ public class RestauraBackup {
         try {
             listaArquivos = zip.listarEntradasZip(fileZip);
         } catch (ZipException ex) {
-            JOptionPane.showMessageDialog(null, "Erro no arquivo ZIP: \n"
-                    + "" + ex.getMessage());
+             
             Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro no arquivo ZIP: \n"
-                    + "" + ex.getMessage());
+             
             Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
         }
         String tabela;
@@ -245,8 +243,7 @@ public class RestauraBackup {
                 pstmt.executeUpdate();
                 pstmt.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Falha ao apagar dados da tabela " + tabela
-                        + "\n MSG" + ex, "FALHA", JOptionPane.INFORMATION_MESSAGE);
+               
                 Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -270,8 +267,6 @@ public class RestauraBackup {
                 pstmt.close();
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Falha ao inserir dados na tabela " + tabela
-                        + "\n MSG" + ex, "FALHA", JOptionPane.INFORMATION_MESSAGE);
                 Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -287,32 +282,27 @@ public class RestauraBackup {
             //  System.out.println("arquivo - " + fileZip + "  no diretorio - " + diretorio);
             zip.extrairZip(fileZip, diretorio);
         } catch (ZipException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na operação de extração do arquivo.\n" + ex.getMessage());
             Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na operação.\n" + ex.getMessage());
             Logger.getLogger(RestauraBackup.class.getName()).log(Level.SEVERE, null, ex);
         }
         zip.fecharZip();
 //        System.out.println("ok descompactou!");
-
     }
 
      
 
     private static String escolheArquivoZip(ArquivoDiretorio arquivoDirBackup) {
-       // JanelaDialogOpcaoDiaBackup janelaDialog = new JanelaDialogOpcaoDiaBackup();
-
+       
         Collection<String> lista = new ArrayList();
         Set<String> chavesDia = arquivoDirBackup.getListArq().keySet();
         for (String k : chavesDia) {
             lista.add(arquivoDirBackup.getListArq().get(k));
         }
         // classifica a lista
-        // classificaLista(lista);
+        
         lista = classificaLista(lista);
-      //  janelaDialog.abreJanelaDialogo(lista);
-
+    
         return lista.toArray()[0].toString();  //janelaDialog.getEscolha();
     }
 
@@ -365,5 +355,13 @@ public class RestauraBackup {
         }
 
         return lista;
+    }
+    
+    
+    
+    public static void main(String[] args) throws Exception {
+
+      //  RestauraBackup.executaImportacao();
+
     }
 }

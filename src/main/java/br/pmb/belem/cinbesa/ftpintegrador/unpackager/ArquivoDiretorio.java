@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador.utils;
+package br.pmb.belem.cinbesa.ftpintegrador.unpackager;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +12,22 @@ import java.util.Set;
  */
 public class ArquivoDiretorio {
 
-    public static final String PREFIXO_SERVICO = "bk_SERVICO_";
+    public static final String PREFIXO_SERVICO = "rbe-";
     private String diretorio;
     private Map<String, String> listArq;
 
+    @Override
+    public String toString() {
+       String saidaFormatada = "";
+       saidaFormatada = "DIRETORIO="+diretorio+"\n";
+       Set<String> chaves = listArq.keySet();
+        for (String chave : chaves) {
+            saidaFormatada = saidaFormatada + chave + " = " + listArq.get(chave)+"\n";
+        }
+       return saidaFormatada; 
+    }
+
+    
     public ArquivoDiretorio() {
         listArq = new HashMap<String, String>();
     }

@@ -18,10 +18,10 @@ public class MainReceive {
         }
         //
         System.out.println("Inicializando os parametros em " + path);    // "C:/tmp/csv";
-        Propriedades.getInstance(path, "configRECEIVE.properties"); // Deve inicializar no inicio do processo          
-        System.out.println("Caminho(PATH) do  CSV = " + Propriedades.getPropriedade("csv.path"));
-        // 
-        // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
-       
+        Propriedades props =  Propriedades.getInstance(path, "configRECEIVE.properties"); // Deve inicializar no inicio do processo          
+         
+        
+        // Workflow:  RestauraBackup ->  ->  
+        ExtrairZip.executarExtracao(props);
     }
 }
