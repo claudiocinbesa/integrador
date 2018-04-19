@@ -1,8 +1,8 @@
 package br.pmb.belem.cinbesa.ftpintegrador.send;
 
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
-import br.pmb.belem.cinbesa.ftpintegrador.packager.CompactaArquivo;
-import br.pmb.belem.cinbesa.ftpintegrador.unpackager.ArquivoDiretorio;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.CompactaArquivo;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ public class Empacotador {
         try {
             String pathCSVs = Propriedades.getPropriedade("csv.path");
 
-            String[] fileNames = ArquivoDiretorio.getArquivos(pathCSVs, ".csv").getArquivos();
+            String[] fileNames = ArquivoDiretorio.getArquivos(pathCSVs, ".csv").getArquivosFullPath();
             String fileNameOut = pathCSVs + "/rbe-"
                     + Propriedades.getPropriedade("unid.codigo") + dataRef + ".zip";
             new CompactaArquivo(fileNames, fileNameOut);

@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador.ftp;
+package br.pmb.belem.cinbesa.ftpintegrador.send.ftp;
 
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Utils;

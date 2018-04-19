@@ -18,10 +18,14 @@ public class MainReceive {
         }
         //
         System.out.println("Inicializando os parametros em " + path);    // "C:/tmp/csv";
-        Propriedades props =  Propriedades.getInstance(path, "configRECEIVE.properties"); // Deve inicializar no inicio do processo          
+        Propriedades props =  Propriedades.getInstanceSingleton(path, "configRECEIVE.properties"); // Deve inicializar no inicio do processo          
          
         
         // Workflow:  RestauraBackup ->  ->  
         ExtrairZip.executarExtracao(props);
+        
+        // importa dados da pasta temp
+        Importador.executarCarga(props);
+        
     }
 }

@@ -3,9 +3,9 @@
  * into a CSV file. We use MySQL database. 
  * FONTE: http://zetcode.com/articles/opencsv/
  */
-package br.pmb.belem.cinbesa.ftpintegrador.csv;
+package br.pmb.belem.cinbesa.ftpintegrador.send.csv;
 
-import br.pmb.belem.cinbesa.ftpintegrador.db.DbConfig;
+import br.pmb.belem.cinbesa.ftpintegrador.send.db.DbConfig;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import com.opencsv.CSVWriter;
 import java.io.IOException;

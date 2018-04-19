@@ -1,6 +1,6 @@
 package br.pmb.belem.cinbesa.ftpintegrador.send;
 
-import br.pmb.belem.cinbesa.ftpintegrador.ftp.Ftp;
+import br.pmb.belem.cinbesa.ftpintegrador.send.ftp.Ftp;
 
 /**
  * Responsavel por enviar o arquivo ZIP (empacotado para os arquivos ZIP) e 

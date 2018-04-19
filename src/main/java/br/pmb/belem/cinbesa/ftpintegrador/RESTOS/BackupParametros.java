@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador.unpackager;
+package br.pmb.belem.cinbesa.ftpintegrador.RESTOS;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -150,16 +150,7 @@ public class BackupParametros {
         this.dataHoraBackup = dataHoraBackup;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Recuperando o nome das tabelas...");
-        // define a conexao com o banco de dados
-        BackupParametros paramBackup = new BackupParametros();
-        String[] listaTabelas = paramBackup.recuperaNomeDasTabelas();
-        for (int i = 0; i < listaTabelas.length; i++) {
-            String string = listaTabelas[i];
-            System.out.println(" nome tab = " + string);
-        }
-    }
+    
 
     public String[] recuperaNomeDasTabelas() {
         String[] retornoLista = null;

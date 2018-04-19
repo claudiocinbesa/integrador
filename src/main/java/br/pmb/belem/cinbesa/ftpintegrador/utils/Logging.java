@@ -1,6 +1,5 @@
 package br.pmb.belem.cinbesa.ftpintegrador.utils;
 
-import br.pmb.belem.cinbesa.ftpintegrador.packager.CompactaArquivo;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.FileHandler;

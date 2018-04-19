@@ -10,7 +10,7 @@
  * procedimento armazenado. FONTE:
  * https://docs.microsoft.com/pt-br/sql/connect/jdbc/data-source-sample
  */
-package br.pmb.belem.cinbesa.ftpintegrador.db;
+package br.pmb.belem.cinbesa.ftpintegrador.send.db;
 
 import java.sql.*;
 import com.microsoft.sqlserver.jdbc.*;

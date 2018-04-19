@@ -1,7 +1,7 @@
 package br.pmb.belem.cinbesa.ftpintegrador.receive;
 
-import br.pmb.belem.cinbesa.ftpintegrador.unpackager.ArquivoDiretorio;
-import br.pmb.belem.cinbesa.ftpintegrador.unpackager.RestauraBackup;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.ArquivoDiretorio;
+import br.pmb.belem.cinbesa.ftpintegrador.RESTOS.RestauraBackup;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import java.io.IOException;
 import java.util.Map;
@@ -18,11 +18,16 @@ class ExtrairZip {
         ArquivoDiretorio filesDir = getFilesZIP(props.getPropriedade("zip.path"));
         System.out.println(filesDir.toString());
         
+        String arquivoPath = filesDir.getUltimoArquivoFullPath();
+        System.out.println("ULTIMO ARQUIVO = " + arquivoPath);
+        
+        String diretorioDestinoCSV = props.getPropriedade("temp.path");
+        filesDir.extraiArquivos(arquivoPath, diretorioDestinoCSV);
     }
-    
+
     private static ArquivoDiretorio getFilesZIP(String path) {
        try {
-           String filtro = "zip";
+           String filtro = ".zip";
            ArquivoDiretorio dirArquivo = null;
            boolean ok = false;
            

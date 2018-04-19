@@ -25,17 +25,23 @@ public class Propriedades {
     Properties prop = new Properties();
 
     public static String getPropriedade(String key) {
-        Propriedades obj = Propriedades.getInstance(null, null);
+        Propriedades obj = Propriedades.getInstanceSingleton(null, null);
         return obj.prop.getProperty(key);
     }
 
     public static void main(String[] args) {
-        // Propriedades oProp = Propriedades.getInstance("C:/tmp/csv"); // Deve inicializar no inicio do processo          
+        // Propriedades oProp = Propriedades.getInstanceSingleton("C:/tmp/csv"); // Deve inicializar no inicio do processo          
         System.out.println(Propriedades.getPropriedade("db.user"));
 
     }
 
-    public static Propriedades getInstance(String pathPropriedade,  String filename) {
+    public static Propriedades getInstanceNew(String filename) {
+        Propriedades obj = new Propriedades();
+        obj.loadProp(null, filename);
+        return obj;
+    }
+
+    public static Propriedades getInstanceSingleton(String pathPropriedade, String filename) {
         if (instance == null) {
             instance = new Propriedades();
             instance.loadProp(pathPropriedade, filename);
@@ -43,7 +49,7 @@ public class Propriedades {
         return instance;
     }
 
-    private void loadProp(String pathPropriedade,  String filename) {
+    private void loadProp(String pathPropriedade, String filename) {
         boolean temFile = false;
         if (pathPropriedade != null) {
             File configFile = new File(pathPropriedade);
@@ -58,7 +64,7 @@ public class Propriedades {
 
             InputStream input = null;
 
-           // = "config.properties";
+            // = "config.properties";
             if (temFile) {
                 Path path = FileSystems.getDefault().getPath(pathPropriedade, filename);
                 input = Files.newInputStream(path);

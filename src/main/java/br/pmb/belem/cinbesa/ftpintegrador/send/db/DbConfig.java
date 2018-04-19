@@ -1,7 +1,7 @@
 /*
  * Sets de acesso ao banco
  */
-package br.pmb.belem.cinbesa.ftpintegrador.db;
+package br.pmb.belem.cinbesa.ftpintegrador.send.db;
 
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.PWSec;

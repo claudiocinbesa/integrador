@@ -1,4 +1,4 @@
-package br.pmb.belem.cinbesa.ftpintegrador.packager;
+package br.pmb.belem.cinbesa.ftpintegrador.utils;
 
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Logging;
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Utils;

@@ -1,7 +1,7 @@
 package br.pmb.belem.cinbesa.ftpintegrador.send;
 
-import br.pmb.belem.cinbesa.ftpintegrador.csv.OpenCSVDatabaseEx;
-import br.pmb.belem.cinbesa.ftpintegrador.db.Conexao;
+import br.pmb.belem.cinbesa.ftpintegrador.send.csv.OpenCSVDatabaseEx;
+import br.pmb.belem.cinbesa.ftpintegrador.send.db.Conexao;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,10 +1,12 @@
-package br.pmb.belem.cinbesa.ftpintegrador.db;
+package br.pmb.belem.cinbesa.ftpintegrador.send.db;
 import java.sql.*;  
 /**
  *
  * @author Claudio Martins
  */
-public class ConectaSqlServer {
+public class TESTConectaSqlServer { 
+    
+    
     public static void main(String[] args) {  
 
       // Create a variable for the connection string. 
