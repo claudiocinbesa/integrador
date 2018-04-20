@@ -18,11 +18,21 @@ import java.util.logging.Logger;
 public class Propriedades {
 
     private static Propriedades instance = null;
+    private Properties prop = new Properties();
 
+    public Properties getProp() {
+        return prop;
+    }
+    
+    public String getValor(String key) {
+        return prop.getProperty(key);
+    }
+    
+    
     protected Propriedades() {
     } // Exists only to defeat instantiation.
 
-    Properties prop = new Properties();
+    
 
     public static String getPropriedade(String key) {
         Propriedades obj = Propriedades.getInstanceSingleton(null, null);
