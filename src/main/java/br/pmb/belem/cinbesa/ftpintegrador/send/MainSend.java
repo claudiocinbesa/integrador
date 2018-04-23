@@ -22,7 +22,7 @@ public class MainSend {
         System.out.println("Caminho(PATH) do CSV = " + Propriedades.getPropriedade("csv.path"));
         // 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
-        String dataRef = "'20160101'";
+        String dataRef = "'20170101'";
         GeradorCSV.geraCSVs(dataRef);
         String fileOutput = Empacotador.enpacotar(dataRef);
         EnviaFTP.enviar(fileOutput);

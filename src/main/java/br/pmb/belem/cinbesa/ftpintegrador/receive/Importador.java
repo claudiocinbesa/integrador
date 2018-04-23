@@ -53,6 +53,10 @@ class Importador {
             if (arquivoCSV.toLowerCase().contains("pacientes")) {
                 CsvReaderWriterDB.load2WriteDB(arquivoCSVpath, "tabPACIENTE", props);
             } else System.out.println("NAO IMPORTOU O CSV =" + arquivoCSVpath);
+            if (arquivoCSV.toLowerCase().contains("avaliacaoinicial")) {
+                CsvReaderWriterDB.load2WriteDB(arquivoCSVpath, "tabAVALIACAOINICIAL", props);
+            } else System.out.println("NAO IMPORTOU O CSV =" + arquivoCSVpath);
+            
         } catch (IOException ex) {
             Logger.getLogger(Importador.class.getName()).log(Level.SEVERE, null, ex);
         }

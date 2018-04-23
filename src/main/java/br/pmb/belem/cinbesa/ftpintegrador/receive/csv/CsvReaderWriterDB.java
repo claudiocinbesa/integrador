@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,7 +25,8 @@ public class CsvReaderWriterDB {
 
     private static Map<String, String> mapCampoTipo = new HashMap<String, String>();
     private static String nomeTabela;
-    private static int pkIndice;
+    private static String pkTabela;
+    private static ArrayList<Integer> pkIndice;
 
     private static Conexao conn;
 
@@ -61,7 +62,7 @@ public class CsvReaderWriterDB {
                     mapeiaCamposTipos(nomeFilePropriedade, header);
                 }
                 if (contRec > 1) {
-                    executaSQL(nomeTabela, header, nextRecord); 
+                    executaSQL(nomeTabela, header, nextRecord);
                 }
             }
         }
@@ -76,22 +77,25 @@ public class CsvReaderWriterDB {
 
         Propriedades p = Propriedades.getInstanceNew(tabelaNome);
         nomeTabela = p.getValor("tabela.nome");
+        pkTabela = p.getValor("tabela.pk");
+        // String[] tokensPK = pkTabela.split(",");
+        pkIndice = new ArrayList<Integer>();                                  // new int[tokensPK.length];
+
         System.out.println("NOME DA TABELA = " + nomeTabela);
         for (int i = 0; i < header.length; i++) {
             String campo = header[i].toLowerCase();
             String tipo = p.getValor(campo);
-            if (tipo.contains("pk")) {
-                String[] tokens = tipo.split(",");
-                tipo = tokens[0];
-                pkIndice = i;
+            System.out.println(" CAMP = " + campo + "            TP="+ tipo);
+            if (pkTabela.contains(campo)) {
+                pkIndice.add(new Integer(i));
             }
-
             mapCampoTipo.put(campo, tipo);
             // System.out.println(campo + " TIPO = " + tipo);
         }
     }
 
     private static String mapeiaValor(String campo, String valor) {
+        
         String tipo = mapCampoTipo.get(campo.toLowerCase()).trim();
         String resValor = valor;
         if (valor.contains("'")) {
@@ -117,12 +121,12 @@ public class CsvReaderWriterDB {
         return resValor;
     }
 
-    
-
     private static void executaSQL(String nomeTabela, String[] header, String[] valores) {
         try {
             // monta o INSERT
             String sql = montaInsert(nomeTabela, header, valores);
+           // if (nomeTabela.toLowerCase().contains("avaliacaoinicial"))
+            //     System.out.println (sql);
             conn.executaSqlUpdate(sql);
         } catch (SQLException ex) {
             // Logger.getLogger(CsvReaderWriterDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,7 +137,7 @@ public class CsvReaderWriterDB {
                 String sql = montaUpdade(nomeTabela, header, valores);
                 try {
                     conn.executaSqlUpdate(sql);
-                   // System.out.println(" Atualizou com UPDATE..");
+                    // System.out.println(" Atualizou com UPDATE..");
                 } catch (SQLException ex1) {
                     System.err.println(" FALHA No update CAUSA = " + ex1.getMessage());
                     Logger.getLogger(CsvReaderWriterDB.class.getName()).log(Level.SEVERE, null, ex1);
@@ -142,7 +146,6 @@ public class CsvReaderWriterDB {
         }
 
     }
-
 
     private static String montaSqlCamposInsert(String[] header) {
         String stSQL = "";
@@ -160,7 +163,7 @@ public class CsvReaderWriterDB {
 
         return stSQL;
     }
-    
+
     private static String montaSqlCamposValoresUpdate(String[] header, String[] valores) {
         String stSQL = "";
         String virgula = "";
@@ -172,16 +175,15 @@ public class CsvReaderWriterDB {
             } else {
                 virgula = " ";
             }
-            
+
             String valor = mapeiaValor(campo, valores[i]);
-            
-            stSQL = stSQL + campo + " = " + valor+ virgula;
+
+            stSQL = stSQL + campo + " = " + valor + virgula;
         }
 
         return stSQL;
     }
-    
-    
+
     private static String montaInsert(String nomeTabela, String[] header, String[] valores) {
         String sqlFirst = "INSERT INTO " + nomeTabela + "  (" + montaSqlCamposInsert(header) + ") \n  "
                 + "   VALUES (";
@@ -190,11 +192,11 @@ public class CsvReaderWriterDB {
         String sqlValores = "";
         for (int i = 0; i < header.length; i++) {
             String campo = header[i];
-
+// System.out.println( "TABELA= "+nomeTabela+  "   CAMPO = " + campo);
             String valor = mapeiaValor(campo, valores[i]);
            // if (campo.equalsIgnoreCase(pkCampo)) {
             //    pkValor = valor;
-           // }
+            // }
             if (i < header.length - 1) {
                 virgula = ", ";
             } else {
@@ -206,12 +208,33 @@ public class CsvReaderWriterDB {
         sqlValores = sqlValores + " );";
         return sqlFirst + " " + sqlValores;
     }
-    
+
     private static String montaUpdade(String nomeTabela, String[] header, String[] valores) {
-       String sql = "UPDATE " + nomeTabela + "  SET " + montaSqlCamposValoresUpdate(header, valores) + " \n  "
-                + "  WHERE " + header[pkIndice] + " = " +  
-               mapeiaValor(header[pkIndice], valores[pkIndice]) ;
-        
+        String clausulaWHERE = "";
+        if (pkIndice.size() == 0) {
+            clausulaWHERE = "; ";
+        } else {
+            clausulaWHERE = "  WHERE ";
+
+            int cont = 0;
+            for (Integer pkInd : pkIndice) {
+                int i = pkInd.intValue();
+                clausulaWHERE = clausulaWHERE
+                        + header[i] + " = " + mapeiaValor(header[i], valores[i]);
+                cont++;
+                if (cont == pkIndice.size()) {
+                    clausulaWHERE = clausulaWHERE + ";";
+                            
+                } else {
+                    clausulaWHERE = clausulaWHERE + " AND ";
+                }
+            }
+        }
+
+        String sql = "UPDATE " + nomeTabela + "  SET " + montaSqlCamposValoresUpdate(header, valores) + " \n  "
+                + clausulaWHERE;
+       // if (nomeTabela.toLowerCase().contains("avaliacaoinicial"))
+         //   System.out.println (sql);
         return sql;
     }
 
