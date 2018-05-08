@@ -12,6 +12,7 @@
  */
 package br.pmb.belem.cinbesa.ftpintegrador.send.db;
 
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import java.sql.*;
 import com.microsoft.sqlserver.jdbc.*;
 import java.util.logging.Level;
@@ -31,8 +32,10 @@ public class Conexao {
     public Conexao() {
         try {
             // Establish the connection.
-            DataSource ds = DbConfig.getDataSource();
-            this.conn = ds.getConnection();
+           // DataSource ds = DbConfig.getDataSource();
+            // this.conn = ds.getConnection();
+            this.conn = DbConfig.getConexao();
+            System.out.println ("CONECTOU ...." + this.conn.getSchema());
         } catch (SQLServerException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -107,6 +110,7 @@ public class Conexao {
     
     public static void main(String[] args) {
         try {
+            Propriedades props = Propriedades.getInstanceSingleton(null, "configSEND.properties");
             Conexao oConn = new Conexao();
             String sql = "";
             ResultSet rs = oConn.executaSqlPacientes("20180301");

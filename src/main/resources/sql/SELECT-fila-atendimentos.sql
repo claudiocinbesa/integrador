@@ -1,4 +1,6 @@
-SELECT DISTINCT [F].[CNES], [F].[CodPaciente],
+SELECT DISTINCT [F].[CNES], 
+   [F].[CodFilaAtendimento],
+   [F].[CodPaciente],
 -- [U].[DescricaoAbreviada], 
   [M].[UF], [M].[CodigoIBGE] , [M].[Nome], 
 -- convert(varchar, [F].[DataAtendimento], 111),

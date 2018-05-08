@@ -2,6 +2,7 @@ package br.pmb.belem.cinbesa.ftpintegrador.send;
 
 import br.pmb.belem.cinbesa.ftpintegrador.send.csv.OpenCSVDatabaseEx;
 import br.pmb.belem.cinbesa.ftpintegrador.send.db.Conexao;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,6 +53,7 @@ public class GeradorCSV {
         parametros.put("{DTINIATENDIMENTO}", dataRef);
         parametros.put("{DTFIMATENDIMENTO}", dataRef);
         // parametros.put("{DTEXCLUSAO}", dataRef);
+        
         sql = new GeradorCSV().lerSQL("Template-PAS_FilaAtendimentosPRESENTES.sql", parametros);
         rs = c.executaSql(sql);
         OpenCSVDatabaseEx.exportaCSVfromRecordSet(rs, "filaatendimentosPRESENTES.csv");
@@ -113,6 +115,7 @@ public class GeradorCSV {
         parametros.put("{DTALTERACAO}", "'20180302'");
         String sql = new GeradorCSV().lerSQL("Template-Geral_Paciente.sql", parametros);
         System.out.println(sql);
+        Propriedades props = Propriedades.getInstanceSingleton(null, "configSEND.properties");
         Conexao c = new Conexao();
         ResultSet rs = c.executaSql(sql);
         while (rs.next()) {

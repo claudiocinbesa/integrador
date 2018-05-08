@@ -2,6 +2,7 @@
 DROP TABLE dbo.pas_filaatendimento ;
 CREATE TABLE dbo.pas_filaatendimento (
     cnes    VARCHAR(7), 
+    codfilaatendimento INT,
     codpaciente    INT, 
     uf    VARCHAR(2), 
     codigoibge    VARCHAR(6), 
@@ -23,6 +24,7 @@ CREATE TABLE dbo.pas_filaatendimento (
     pacientesituacaorua    VARCHAR(6), 
     cboatendimento    VARCHAR(10), 
     codsalaatendimento    smallint, 
-    nomeinterno VARCHAR(30)
+    nomeinterno VARCHAR(30),
+    CONSTRAINT          PK_pas_filatendimento PRIMARY KEY (cnes, codfilaatendimento)
 );
 COPY dbo.pas_filaatendimento  FROM   'C:/tmp/csv/filaatendimentosPRESENTES.csv' HEADER CSV;

@@ -130,7 +130,7 @@ public class CsvReaderWriterDB {
             conn.executaSqlUpdate(sql);
         } catch (SQLException ex) {
             // Logger.getLogger(CsvReaderWriterDB.class.getName()).log(Level.SEVERE, null, ex);
-            // System.err.println(" FALHA NA INCLUSAO CAUSA = " + ex.getMessage());
+             // System.err.println(" FALHA NA INCLUSAO CAUSA = " + ex.getMessage());
             // Logger.getLogger(CsvReaderWriterDB.class.getName()).log(Level.SEVERE, null, ex);
             if (ex.getMessage().contains("duplicate key")) {
                 // faz update o UPDATE

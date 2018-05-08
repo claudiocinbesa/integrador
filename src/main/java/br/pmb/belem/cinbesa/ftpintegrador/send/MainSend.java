@@ -20,6 +20,7 @@ public class MainSend {
         System.out.println("Inicializando os parametros em " + path);    // "C:/tmp/csv";
         Propriedades.getInstanceSingleton(path, "configSEND.properties"); // Deve inicializar no inicio do processo          
         System.out.println("Caminho(PATH) do CSV = " + Propriedades.getPropriedade("csv.path"));
+        System.out.println("URL do banco = " + Propriedades.getPropriedade("db.url"));
         // 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
         String dataRef = "'20170101'";

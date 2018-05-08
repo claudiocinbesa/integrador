@@ -95,11 +95,15 @@ public class Conexao {
         return null;
     }
 
-    public int executaSqlUpdate(String sql) throws SQLException {
-       // System.out.println(sql);
-        cstmt = this.conn.prepareStatement(sql);
-          
-        return cstmt.executeUpdate();
+    public int executaSqlUpdate(String sql){
+        try {
+            // System.out.println(sql);
+            cstmt = this.conn.prepareStatement(sql);
+            return cstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     public static void main(String[] args) {
