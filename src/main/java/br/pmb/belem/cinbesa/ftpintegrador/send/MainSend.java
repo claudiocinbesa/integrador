@@ -10,7 +10,7 @@ import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
 public class MainSend {
 
     public static void main(String[] args) {
-        String path = null;
+        String path = null; 
         if (args.length == 0) {
             path = null;
         } else {
@@ -23,7 +23,7 @@ public class MainSend {
         System.out.println("URL do banco = " + Propriedades.getPropriedade("db.url"));
         // 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
-        String dataRef = "'20170101'";
+        String dataRef = "'20180509'";
         GeradorCSV.geraCSVs(dataRef);
         String fileOutput = Empacotador.enpacotar(dataRef);
         EnviaFTP.enviar(fileOutput);
