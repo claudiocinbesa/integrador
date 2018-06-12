@@ -1,6 +1,8 @@
 package br.pmb.belem.cinbesa.ftpintegrador.send;
 
 import br.pmb.belem.cinbesa.ftpintegrador.utils.Propriedades;
+import br.pmb.belem.cinbesa.ftpintegrador.utils.UtilData;
+import java.util.Date;
 
 /**
  * Aplicacao principal (orquestrando a chamada das rotinas)
@@ -23,7 +25,11 @@ public class MainSend {
         System.out.println("URL do banco = " + Propriedades.getPropriedade("db.url"));
         // 
         // Workflow:  GeradorCSV -> Enpacotador -> EnviaFTP
-        String dataRef = "'20180509'";
+        Date dtCorrente = new Date();
+        String dataC = UtilData.converteData2yyyyMMdd(dtCorrente);
+       // String dataRef = "'"+dataC + "'";  // "'20180509'";  -- observar as datas de finais de semanas que devem entrar
+        String dataRef = "'20180521'";  
+        System.out.println("REF:" + dataRef);
         GeradorCSV.geraCSVs(dataRef);
         String fileOutput = Empacotador.enpacotar(dataRef);
         EnviaFTP.enviar(fileOutput);

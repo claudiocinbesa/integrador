@@ -49,6 +49,14 @@ public class UtilData {
         return "" + new StringBuilder(dateformat.format(data));
     }
 
+    public static String converteData2yyyyMMdd(java.util.Date data) {
+        if (data == null) {
+            return "";
+        }
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
+        return "" + new StringBuilder(dateformat.format(data));
+    }
+
     public static String converteData2yyyy_MM_dd(java.util.Date data) {
         if (data == null) {
             return "";
@@ -515,8 +523,8 @@ public class UtilData {
          */
         Date dt = new Date();
         System.out.println(converteData2ddMMyyyyHoraMin(dt));
-        System.out.println(converteData2ddMMyyyyHoraMin(dataSubtraiMinutos(dt, 10)) );
-        System.out.println(converteData2ddMMyyyyHoraMin(dataSomaMinutos(dt, 10)) );
+        System.out.println(converteData2ddMMyyyyHoraMin(dataSubtraiMinutos(dt, 10)));
+        System.out.println(converteData2ddMMyyyyHoraMin(dataSomaMinutos(dt, 10)));
 
     }
 }
