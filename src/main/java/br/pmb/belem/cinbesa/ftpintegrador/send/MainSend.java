@@ -28,7 +28,7 @@ public class MainSend {
         Date dtCorrente = new Date();
         String dataC = UtilData.converteData2yyyyMMdd(dtCorrente);
        // String dataRef = "'"+dataC + "'";  // "'20180509'";  -- observar as datas de finais de semanas que devem entrar
-        String dataRef = "'20180521'";  
+        String dataRef = "'20180522'";  
         System.out.println("REF:" + dataRef);
         GeradorCSV.geraCSVs(dataRef);
         String fileOutput = Empacotador.enpacotar(dataRef);
