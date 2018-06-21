@@ -50,13 +50,14 @@ class Importador {
 
     private static void importa(String arquivoCSV, String arquivoCSVpath, Propriedades props) {
         try {
-    /**        if (arquivoCSV.toLowerCase().contains("pacientes")) {
+           if (arquivoCSV.toLowerCase().contains("pacientes")) {
                CsvReaderWriterDB.load2WriteDB(arquivoCSVpath, "tabPACIENTE", props);
             } else System.out.println("NAO IMPORTOU O CSV =" + arquivoCSVpath);
+           
             if (arquivoCSV.toLowerCase().contains("avaliacaoinicial")) {
                 CsvReaderWriterDB.load2WriteDB(arquivoCSVpath, "tabAVALIACAOINICIAL", props);
             } else System.out.println("NAO IMPORTOU O CSV = " + arquivoCSVpath);
-       **/     
+            
             if (arquivoCSV.toLowerCase().contains("atendimento")) {
                 CsvReaderWriterDB.load2WriteDB(arquivoCSVpath, "tabATENDIMENTOS", props);
             } else System.out.println("NAO IMPORTOU O CSV = " + arquivoCSVpath);
