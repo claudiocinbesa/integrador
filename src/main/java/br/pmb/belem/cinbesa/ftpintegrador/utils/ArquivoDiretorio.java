@@ -138,7 +138,8 @@ public class ArquivoDiretorio {
     public String getUltimoArquivoFullPath() {
         return this.listArq.get(ultimaArquivo());
     }
-
+    
+    
     public void deletaDiretorio(String diretorio) {
         File inFile = new File(diretorio);
         if (inFile.isFile()) {

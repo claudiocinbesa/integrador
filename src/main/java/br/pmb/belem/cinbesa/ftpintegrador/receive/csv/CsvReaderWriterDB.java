@@ -85,7 +85,7 @@ public class CsvReaderWriterDB {
         for (int i = 0; i < header.length; i++) {
             String campo = header[i].toLowerCase();
             String tipo = p.getValor(campo);
-            System.out.println(" CAMP = " + campo + "            TP="+ tipo);
+          //  System.out.println(" CAMP = " + campo + "            TP="+ tipo);
             if (pkTabela.contains(campo)) {
                 pkIndice.add(new Integer(i));
             }
